@@ -7,12 +7,15 @@ except ImportError:
 
 class ProgressBar(object):
 
+    _clear = True
+
     _default = {'pre':'' if _clear_output else '\r',
                 'left':"[", 'symbol':'=', 'right':']',
                 'post':" %d%%"}
 
-    def __init__(self, length=20, **kwargs):
+    def __init__(self, length=20, limit=None, **kwargs):
         self._current = None
+        self.limit = limit
         self.length = length
         traits = self._merge(kwargs)
         for key,value in traits.items():
@@ -32,19 +35,21 @@ class ProgressBar(object):
 
     def _make_form(self, length):
         left = self.pre+self.left
-        inner = "%-"+str(length)+"s"
+        spaces = length*len(self.symbol)
+        inner = "%-"+str(spaces)+"s"
         right = self.right+self.post
         return left+inner+right
 
     render = lambda self,*args: self.form%args
 
-    def printout(self, percent):
+    def printout(self, value):
+        percent = float(value)/(self.limit or 1)
         num = int(round(percent*self.length))
         if num!=self._current:
-            if _clear_output:
+            if self._clear and _clear_output:
                 _clear_output()
             bar = self.symbol*num
-            prcnt = 100 if bar==self.length else percent*100
+            prcnt = 100 if num==self.length else percent*100
             rendered = self.render(bar, prcnt)
             sys.stdout.write(rendered)
             sys.stdout.flush()
