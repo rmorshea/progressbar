@@ -6,5 +6,7 @@ using the following commands:
 
 ```python
 import antipackage
-from github.rmorshea.ising import ising
+from github.rmorshea.progressbar import ProgressBar
 ```
+
+See `docs/example.ipynb` for more info.
