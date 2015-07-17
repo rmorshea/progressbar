@@ -39,16 +39,13 @@ class ProgressBar(object):
     render = lambda self,*args: self.form%args
 
     def printout(self, percent):
-        num = round(percent*self.length)
-        if num>self._current:
+        num = int(round(percent*self.length))
+        if num!=self._current:
             if _clear_output:
                 _clear_output()
-            bar = self.symbol*int(num)
+            bar = self.symbol*num
             prcnt = 100 if bar==self.length else percent*100
             rendered = self.render(bar, prcnt)
             sys.stdout.write(rendered)
             sys.stdout.flush()
             self.current = num
-
-    def reset(self):
-        self._current = 0
