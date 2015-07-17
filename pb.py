@@ -48,4 +48,4 @@ class ProgressBar(object):
             rendered = self.render(bar, prcnt)
             sys.stdout.write(rendered)
             sys.stdout.flush()
-            self.current = num
+            self._current = num
