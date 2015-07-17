@@ -12,7 +12,7 @@ class ProgressBar(object):
                 'post':" %d%%"}
 
     def __init__(self, length=20, **kwargs):
-        self.current = None
+        self._current = None
         self.length = length
         traits = self._merge(kwargs)
         for key,value in traits.items():
@@ -40,7 +40,7 @@ class ProgressBar(object):
 
     def printout(self, percent):
         num = round(percent*self.length)
-        if num>self.current:
+        if num>self._current:
             if _clear_output:
                 _clear_output()
             bar = self.symbol*int(num)
@@ -49,3 +49,6 @@ class ProgressBar(object):
             sys.stdout.write(rendered)
             sys.stdout.flush()
             self.current = num
+
+    def reset(self):
+        self._current = 0
