@@ -1,14 +1,13 @@
 import sys
-from contextlib import contextmanager
 
 try:
-    from IPython.display import clear_output
+    from IPython.display import clear_output as _clear_output
 except ImportError:
-    clear_output = None
+    _clear_output = None
 
 class ProgressBar(object):
 
-    _default = {'pre':'' if clear_output else '\r',
+    _default = {'pre':'' if _clear_output else '\r',
                 'left':"[", 'symbol':'=', 'right':']',
                 'post':" %d%%"}
 
@@ -42,8 +41,8 @@ class ProgressBar(object):
     def printout(self, percent):
         num = round(percent*self.length)
         if num>self.current:
-            if clear_output:
-                clear_output()
+            if _clear_output:
+                _clear_output()
             bar = self.symbol*int(num)
             prcnt = 100 if bar==self.length else percent*100
             rendered = self.render(bar, prcnt)
