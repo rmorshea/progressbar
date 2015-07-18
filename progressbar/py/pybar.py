@@ -5,7 +5,7 @@ try:
 except ImportError:
     _clear_output = None
 
-class ProgressBar(object):
+class Progress(object):
 
     _clear = True
 
