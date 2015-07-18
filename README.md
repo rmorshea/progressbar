@@ -1,12 +1,8 @@
 ## Installation
 
-This module can be installed with
-[antipackage](https://github.com/rmorshea/antipackage)
-using the following commands:
+Clone this repo onto your local machine, `cd` into
+the tope level folder containing setup.py and run:
 
-```python
-import antipackage
-from github.rmorshea.progressbar import ProgressBar
-```
+```pip install .```
 
-See `docs/example.ipynb` for more info.
+See `docs/example.ipynb` for examples.
