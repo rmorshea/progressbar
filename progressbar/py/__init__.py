@@ -1,2 +1,1 @@
-import pybar
-import jsbar
+from bar import *
