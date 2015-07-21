@@ -1,6 +1,13 @@
 import sys
 
 try:
+    # IPython 4
+    from traitlets import HasTraits, Dict
+except ImportError:
+    # IPython 3
+    from IPython.utils.traitlets import HasTraits, Dict
+
+try:
     from IPython.display import clear_output as _clear_output
 except ImportError:
     _clear_output = None
@@ -17,13 +24,13 @@ class Progress(object):
         self._current = None
         self.limit = limit
         self.length = length
-        traits = self._merge(kwargs)
+        traits = self._merge_styles(kwargs)
         for key,value in traits.items():
             setattr(self, key, value)
         self.form = self._make_form(length)
 
-    def _merge(self, kwargs):
-        traits = self._default
+    def _merge_styles(self, kwargs):
+        traits = self._default.copy()
         for key,value in kwargs.items():
             if key in traits:
                 value = '' if value is None else str(value)
